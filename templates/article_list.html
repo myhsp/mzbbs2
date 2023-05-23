@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+
+<style>
+    html, body {
+	width: 100%;
+	height: 100%;
+}
+content { 
+	background-color: rgb(255, 255, 238);
+	height: 100%;
+	width: 100%;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.announcement{
+    width: 50%;
+    height: 20px; 
+    border: 1px solid orange;
+    border-radius: 2px;
+    background-color:gold;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    margin-left: 50%;
+    transform: translate(-50%,0);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+</style>
+<title>魔怔bbs测试版</title>
+<link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body>
+
+    <div id="menu" style="float: left;width: 10%;margin-left: 10px;z-index: 0;">
+        <div style="text-align: center;">
+            <img src="{{ url_for('static',filename='big_brother.png') }}" width="100%" style="border-radius: 50%;overflow: hidden;"><br>
+            <h2 style="top:0px;">魔怔BBS<br>demo</h2>
+            <code style="font-family:sans-serif;">Big brother is watching you.<br>- <i>1984</i></code><br><hr style="margin-top: 10px;margin-bottom: 10px;">
+            </div id="tools">
+                <h4>账号</h4>
+                <span><a href="/ui/login">绅士登入</a></span><br>
+                <span><a href="/ui/cookie">设置饼干</a></span><br>
+                <span><a href="/account/get_permit">签到</a></span><br>
+                <span><a href="/ui/space">个人设置</a></span>
+                <hr style="margin-top: 10px;margin-bottom: 10px;">
+                <h4>小工♂具</h4>
+                <span><a href="/ui/search" target="_blank">绅士搜索</a></span> <br>
+                <span><a href="/ui/write" target="_blank">发帖对线</a></span><br>
+                <span><a href="/ui/upload" target="_blank">大量文本</a></span><br>
+                <span><a href="/ui/new_thread" target="_blank">新讨论串</a></span><br>
+                <span><a href="/hitokoto" target="_blank">hitokoto</a></span>
+                <hr style="margin-top: 10px;margin-bottom: 10px;">
+                <h4>分区</h4>
+                <span><a href="/search/search_service?type=section&query=-1" target="_blank">公告</a></span>
+                <span><a href="/search/search_service?type=section&query=0" target="_blank">默认</a></span><br>
+                <span><a href="/search/search_service?type=section&query=1" target="_blank">校内</a></span>
+                <span><a href="/search/search_service?type=section&query=2" target="_blank">ACG</a></span><br>
+                <span><a href="/search/search_service?type=section&query=3" target="_blank">文艺</a></span>
+                <span><a href="/search/search_service?type=section&query=4" target="_blank">技术</a></span><br>
+                <span><a href="/search/search_service?type=section&query=5" target="_blank">水贴</a></span>
+                <span><a href="/search/search_service?type=section&query=6" target="_blank">反馈</a></span>
+                <hr style="margin-top: 10px;margin-bottom: 10px;">
+                <h4>其它</h4>
+                <span><a href="/ui/docs" target="_blank">文档</a></span>
+            </div>
+    <div style="margin-left: 10px;">
+        <div id="main" style="z-index: 1;margin-right: 0px;margin-left: 10%;background-color: rgb(255, 255, 238);width: 90%;height:fit-content;" >
+            <div style="margin-left: 20px;margin-right: 20px;">
+                <div id="board" style="text-align: center;">
+                    {% if a_flag %}
+                        <div id="announcement" class="announcement">
+                            <span style="vertical-align:middle;">
+                                <span style="max-width: 40%;overflow: hidden;text-overflow: ellipsis;">公告：{{announcement[0]}}</span> <a href="/ui/articles/{{announcement[1]}}">点击查看</a>
+                            </span>
+                        </div>
+                    {% endif %}
+                    <h1>绵中壬自研高雅bbs系统</h1>
+                    <img src="/static/mainpage/{{filename}}" style="max-width: 80%;"><br>
+                    <code>张浩扬 博士提供强劲网络支持<code>
+                </div><hr style="margin-bottom: 15px;">
+                <div id="desc">
+                    <h2>本站使用方法</h2><br>
+                    <ul style="font-family: Arial, Helvetica, sans-serif;font-size: 12px;margin-left: 30px;">
+                        <li>
+                            注册相关<br>
+                            本站现处于测试阶段，因此请发邮件至 hsiaowei_lu@foxmail.com 手动注册。<br>
+                            邮件需包含以下要素：
+                            <ul style="margin-left: 20px;">
+                                <li>
+                                    主题说明来意；
+                                </li>
+                                <li>
+                                    说明 用户名（无法更改）、昵称、密码（不要用常用的）。
+                                </li>
+                            </ul>
+                            我们会在收到邮件后给你分配一个“🍪饼干”（cookie），使用饼干你就可以发帖了。<br>
+                            + 新增「登录」功能，你可以拿你的账号密码去获取饼干<br>
+                            <span style="color: red;">（提交的密码未经加密，所以不要用常用的密码如qq密码！）</span>
+                        </li>
+                        <li>
+                            发帖内容相关
+                            <ul style="margin-left: 20px;">
+                                <li>
+                                    <b>严禁键政</b>，但校内相关事务可以做一些不激进的评价；
+                                </li>
+                                <li>
+                                    不许开大车，ghs及发布不符合有关规定的内容；
+                                </li>
+                                <li>
+                                    不能人身攻击。
+                                </li>
+                            </ul>
+                            其中，违反第一条直接橄榄账号，二、三条封号。解封自行找管理员。
+                        </li>
+                        <li>
+                            站内使用相关
+                            <ul style="margin-left: 20px;">
+                                <li>
+                                    每人每天有 5 次发帖机会和 20 次评论机会，通过「签到」获得；
+                                </li>
+                                <li>
+                                    帖子每篇不超过 5000 字，评论每条不超过 500 字<br>
+                                    <del>（难道你要在评论区写作文吗？？）</del>
+                                </li>
+                                <li>
+                                    发帖技巧
+                                    <ul style="margin-left: 40px;">
+                                        <li>
+                                            通过在一个新行的开头加上[img]标识，后面跟上一个图片的<b>完整的</b>url，可以发送图片<br>
+                                            （这里推荐用acfun的图床，b站的图床似乎有问题）；
+                                        </li>
+                                        <li>
+                                            通过在一个新行的开头加上[iframe]标识，后面跟上一个嵌入式框架的标签，可以显示一个嵌入式框架<br>
+                                            （e.g. B站的<b>网页端</b>的视频的“分享”里就有个“嵌入式框架”的选项。把这个玩意放在这里就可以<br>
+                                            发一个B站视频）；
+                                        </li>
+                                        <b>需要注意：</b>这些[img][iframe]标识符必须严格地处在一行<b>开头</b>，也就是说连空格都不要有！<br>
+                                        在网页的文本编辑器里一些东西可能看起来像是在两行，但是并不是这样的！可以使用记事本之类的软件<br>
+                                        关闭“自动换行”（格式>自动换行）后把文本拷贝进去看看。<br>
+                                        另外，嵌入式框架的HTML标签也有可能在两行，这时候要注意！仍然是用记事本看一下，有问题就赶紧改！<br>
+                                        要是框架的标签没有闭合，内容就无法正常显示！
+                                        <li>
+                                            通过使用“大量文本”功能。你可以上传一个文本在1MB以内的文本文档<b>（.txt）</b><br>
+                                            上传后会给你一串神秘代码，在你的普通发帖中插入[mass-text]，后面跟上这串神秘代码（仍然不要乱打空格）<br>
+                                            可以以[mass-img]为开头来标识以图片模式打开你上传的内容。当然，如果是这样，你的文件中必须按一行一个<br>
+                                            图片url（这时候就没必要加[img]了）的方法来编写。<br>
+                                            此外，务必确定你的文章编码是 <b>utf-8</b> 编码。[不懂自行必应（不要百度，百度是什么**）]
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <del>把这个网站告诉你的朋友</del>
+                        </li>
+                        <li>
+                            <del>帮我们开发网站</del>
+                        </li>
+                    </ul>
+                </div>
+                <hr style="margin-top: 15px;;margin-bottom: 15px;"><br>
+                <div id="list">
+                    <h2 style="top: 0;left: 0;">文章列表</h2><br><hr>
+                    <div style="font-family: Arial, Helvetica, sans-serif;font-size: 12px;">
+                            {% for a in articles %}
+                                <br>
+                                <b>
+                                    <a href="/ui/articles/{{a[0]}}" target="_blank" style="width:130px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">{{a[1]}}</a><br>
+                                </b>
+                                    <span><i><a href="/ui/users/{{a[2]}}" target="_blank">{{a[2]}}</a> - {{a[3]}}</i></span>
+                                <br><br>
+                                    <hr>
+                            {% endfor %}
+                    </div>     
+                </div>
+                <br>
+                <div id="threads">
+                    <h2 style="top:0;left:0;">讨论串</h2><br><hr>
+                    {% for t in threads %}
+                    <div style="font-family: Arial, Helvetica, sans-serif;font-size: 12px;">
+                        <br>
+                                    <b>
+                                        <a href="/ui/thread/{{t[0]}}" target="_blank" style="width:130px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">{{t[1]}}</a><br>
+                                    </b>
+                                        <span><i>简介：{{t[2]}} - {{t[3]}}</i></span>
+                                    <br><br>
+                                        <hr>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+            </div>
+    </div>
+    
+    
+</div>
+</body>
+<script>
+
+</script>
+</html>

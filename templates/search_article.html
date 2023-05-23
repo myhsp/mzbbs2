@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <style>
+    html, body {
+	width: 100%;
+	height: 100%;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+.hr_spacing{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+    </style>
+    <link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body>
+    <div id="bg" style="width: 100%;height: 100%;background-color: rgb(255, 255, 238);">
+        <div id="main" style="margin-left: 0px;background-color: rgb(255, 255, 238);width: 100%;height:max-content;" >
+                <div style="margin-left: 20px;margin-right: 20px;">
+                <h3>共找到{{count}}条记录</h3><hr style="margin-bottom: 10px;">
+                
+                {% for a in records %}
+
+                        <b><a href="/ui/articles/{{a[0]}}" target="_blank" style="width:130px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">{{a[1]}}</b><br>
+                            <span><i><a href="/ui/users/{{a[2]}}" target="_blank">{{a[2]}}</a> - {{a[3]}}</i></span>
+                            <hr class="hr_spacing">
+                    
+                
+                {% endfor %}
+                <div id="select_page">
+                    <span>第{{cur_page}}页 - 共{{total_page}}页   </span>
+                    {% if use_previous %}
+                    <a href="/search/search_service?type={{search_type}}&query={{search_query}}&page=1">第一页</a> - 
+                    <a href="/search/search_service?type={{search_type}}&query={{search_query}}&page={{cur_page-1}}">上一页</a> 
+                    {% endif %}
+
+                    {% if use_next %}
+                    <a href="/search/search_service?type={{search_type}}&query={{search_query}}&page={{cur_page+1}}">下一页</a> - 
+                    <a href="/search/search_service?type={{search_type}}&query={{search_query}}&page={{total_page}}">最后一页</a>
+                    {% endif %}
+                </div>
+                <a href="/ui/search">返回搜索页</a>
+                </div>
+            
+        </div>
+    </div>
+    
+</body>
+</html>

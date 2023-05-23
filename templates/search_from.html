@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        html, body {
+        width: 100%;
+        height: 100%;
+    }
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    </style>
+    <link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body background="{{ url_for('static',filename='berkeley.jpg') }}" style="background-repeat: no-repeat;background-size: cover;">
+    <div style="background-repeat: no-repeat;background-image: url(/static/senpai.png);background-position: bottom;background-size:50% 50%;width: 300px;height: 300px;margin-left: 50%;margin-top: 20%;transform: translate(-50%,-50%);text-align: center;position: absolute;background-color: rgb(255, 255, 255);border-radius: 10px;border-color: rgb(251, 114, 153);border-width: 1px;">
+    <h2>绅士搜索</h2><br><br>
+        <form name="search" action="/search/search_service" method="get">
+        <input type="text" name="query" placeholder="以空格分隔的关键词"><br>
+        <input type="radio" name="type" value="article">搜文章
+        <input type="radio" name="type" value="user">找用户
+        <input type="radio" name="type" value="tag">搜tag
+        <input type="hidden" name="page" value="1">
+        <br>
+        <input type="submit" value="  搜索  ">
+    </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <style>
+    html, body {
+	width: 100%;
+	height: 100%;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+.hr_spacing{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.round_icon{
+  width: 80px;
+  height: 80px;
+  display: flex;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  }
+</style>
+<link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body style="background-color: rgb(255,255,238);">
+    <div>
+        <div id="settings" style="width: fit-content;height:fit-content;margin-left: 50%;margin-top: 20%;transform: translate(-50%,-50%);">
+    <form name="settings" action="/account/settings" method="get">
+        昵称：<input type="text" name="nickname" value="{{nickname}}" required="required"><br>
+        生日：<input type="date" name="birthday" value="{{birthday}}" required="required"><br>
+        性别：<br>
+        <input type="radio" name="gender" value="0" required="required">保密
+        <input type="radio" name="gender" value="1">男
+        <input type="radio" name="gender" value="2">女<br>
+        个签：<input type="text" name="slogan" value="{{slogan}}"><br>
+        头像url：<input type="text" name="avatar" value="{{avatar}}">
+        <input type="submit" name="submit" value="提交">
+
+    </form>
+    </div>
+    </div>
+    
+    
+</body>
+</html>

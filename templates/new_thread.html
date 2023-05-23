@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        html, body {
+        width: 100%;
+        height: 100%;
+    }
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    hr {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    </style>
+    <link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body style="background-color: rgb(255, 255, 238);">
+    <div id="bg" style="width: 100%;height: 100%;background-color: rgb(255, 255, 238);">
+        <h2>新建一个讨论串</h2><hr>
+        <div id="main" style="transform: translate(-50%,0);margin-left: 50%;background-color: rgb(255, 255, 238);width: 300px;height:max-content;" >
+            <form name="write" action="/blog/new_thread" method="get">
+        
+        <input type="text" name="title" placeholder="标题（必填）" required="required"><br>
+        <input type="text" name="description" placeholder="简介" required="required">
+        <input type="submit" value="我输好了">
+    </form>
+        </div>
+    </div>
+</body>
+</html>

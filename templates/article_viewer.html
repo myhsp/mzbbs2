@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        html, body {
+        width: 100%;
+        height: 100%;
+    }
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    iframe{
+        width: 800px;
+        height: 450px;
+    }
+    </style>
+    <link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body style="background-color: rgb(255, 255, 238);">
+    <div id="bg" style="width: 100%;height: 100%;background-color: rgb(255, 255, 238);">
+        <div style="margin-left: 0px;margin-right: 0px;background-color: rgb(255, 255, 238);width: 100%;height:max-content;">
+            <div style="margin-left: 10px;margin-right: 20px;height: fit-content;">
+                <h2>{{title}}<hr style="margin-left: 5px;margin-right: 5px;margin-top: 10px;margin-bottom: 10px;">
+            <h4>发布者：<a href="/ui/users/{{username}}">{{username}}</a> - 发布日期：{{date}} - 分区：{{section}} - 标签：{{tags}}</h4>
+            <p><i>简介：{{description}}</i></p>
+            <hr style="margin-left: 5px;margin-right: 5px;margin-top: 10px;margin-bottom: 10px;">
+                {% for l in lines %}
+                    {% if l[0]=="iframe" %}
+                        {{l[1]|safe}}
+                    {% elif l[0]=="img" %}
+                        <img src="{{l[1]}}" alt="img missing">
+                    {% elif l[0]=="mt" %}
+                        <p><a href="/ui/massive/{{l[1]}}?type=text">大量文本</a></p>
+                    {% elif l[0]=="mi" %}
+                        <p><a href="/ui/massive/{{l[1]}}?type=img">大量图片</a></p>
+                    {% else %}
+                        <p>{{l[1]}}</p>
+                    {% endif %}
+                {% endfor %}
+                <p><a href="/ui/forum">回到主页</a></p>
+                <hr style="margin-left: 5px;margin-right: 5px;margin-top: 15px;margin-bottom: 15px;">
+                <h3 style="margin-bottom: 30px;">评论区</h3>
+                <div id="send-comment" style="width:400px;height: 300px;margin-left: 50%;transform: translate(-50%,0);text-align: center;">
+                    <span style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;">要吐槽一下吗？</span>
+                    <form name="comment" action="/blog/comment" method="post">
+                        <input type="hidden" name="target" value="{{num}}"> <!--这里事文章的编号-->
+                        <textarea oninput="l(this,500,'textNum');" id="textArea" cols="50" required="required" rows="10" name="content" style="font-family: Arial, Helvetica, sans-serif;resize: none;"></textarea>
+                        <p style="font-family: Arial, Helvetica, sans-serif;"><span id="textNum" style="text-align: right; ">0</span>/500</p>
+                        <input type="submit" name="submit" value="我输好了">
+                    </form>
+                </div>
+                <hr style="margin-left: 5px;margin-right: 5px;margin-top: 15px;margin-bottom: 15px;">
+                {% for c in comments %}
+                <div>
+                    <a href="/ui/users/{{c['uname']}}">{{c['uname']}}</a> - <span>{{c['time']}}</span><br>
+                    {% for i in c['content'].split('\r\n') %}
+                    <span style="font-size: 15px;font-family: Arial, Helvetica, sans-serif;max-width: 80%;height: fit-content;">{{i}}</span><br>
+                    {% endfor %}
+                    <hr style="margin-left: 5px;margin-right: 5px;margin-top: 15px;margin-bottom: 15px;">
+                </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </div>
+    
+<script>
+        function l(ta,max_l,tb){
+            var cl=ta.value.length
+            var disp=document.getElementById(tb)
+            if (cl>max_l){
+                ta.value=ta.value.substring(0,max_l)
+            }
+            cl=ta.value.length
+            disp.innerHTML=cl
+        }
+</script>
+</body>
+</html>

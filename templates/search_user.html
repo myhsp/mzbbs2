@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <style>
+    html, body {
+	width: 100%;
+	height: 100%;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+.hr_spacing{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.round_icon{
+  width: 80px;
+  height: 80px;
+  display: flex;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  }
+</style>
+<link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body style="background-color: rgb(255, 255, 238);">
+    <div id="bg" style="width: 100%;height: 100%;background-color: rgb(255, 255, 238);">
+        <div id="main" style="margin-left: 0px;background-color: rgb(255, 255, 238);width: 100%;height:max-content;" >
+                <div style="margin-left: 20px;margin-right: 20px;">
+                <h3>共找到{{count}}条记录</h3><hr style="margin-bottom:10px;">
+                
+                {% for a in records %}
+                <div id="avatar" style="float: left;">
+                    <img class="round_icon" src="{{a[4]}}">
+                </div>
+                <div id="content"  style="display: block;margin-bottom: 30px;margin-left: 100px;">
+                    <b><a href="/ui/users/{{a[0]}}" target="_blank" style="width:130px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">{{a[0]}}</b></a> - 
+                    <i>{{a[1]}}</i>
+                    <br>
+                    <span>
+                    {{a[2]}}
+                        <br>
+                    {{a[3]}}
+                    </span>
+                </div>
+                            
+                        <hr class="hr_spacing">
+                {% endfor %}
+                <div id="select_page">
+                    <span>第{{cur_page}}页 - 共{{total_page}}页 - </span>
+                    {% if use_previous %}
+                    <a href="/search/search_service?type={{search_type}}&query={{search_query}}&page=1">第一页</a> - 
+                    <a href="/search/search_service?type={{search_type}}&query={{search_query}}&page={{cur_page-1}}">上一页</a> - 
+                    {% endif %}
+
+                    {% if use_next %}
+                    <a href="/search/search_service?type={{search_type}}&query={{search_query}}&page={{cur_page+1}}">下一页</a> - 
+                    <a href="/search/search_service?type={{search_type}}&query={{search_query}}&page={{total_page}}">最后一页</a>
+                    {% endif %}
+                </div>
+                <a href="/ui/search">返回搜索页</a>
+                </div>
+            
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <style>
+    html, body {
+	width: 100%;
+	height: 100%;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+.hr_spacing{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.round_icon{
+  width: 80px;
+  height: 80px;
+  display: flex;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  }
+
+.comment{
+    background-color: rgba(128,128,128,0.3); 
+    width: fit-content;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 800px;
+    max-height: 2000px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+h2{
+        font-size: 20px;
+    }
+    h4{
+        font-size: 15px;
+    }
+</style>
+<link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body style="background-color: rgb(255,255,238);">
+    <div id="offset" style="margin-left: 20px;margin-top: 0px;margin-right: 20px;margin-bottom: 20px;">
+        <div id="title">
+            <h2>讨论串 #{{id}}</h2>
+            <h4>主题：{{title}}</h4>
+            <span>创建者：{{author}}</span> - <span><i>简介：{{desc}}</i></span>
+            <div>
+                <span id="threadId">[thread:{{id}}]</span>   <button onclick="copy()">点击复制讨论串id</button>
+            </div>
+            <hr class="hr_spacing">
+        </div>
+        <div>
+            {% for c in content %}
+                <div id="content">
+                    <div id="article" style="margin-left: 30px;">
+                        <span><b><a href="/ui/articles/{{c[5]}}">{{c[0]}}</a></b></span><br>
+                        <span><a href="/ui/users/{{c[1]}}">{{c[1]}}</a> - {{c[2]}}</span><br>
+                        {% if c[6] %}
+                            <img src="{{c[7]}}" alt="img missing">
+                        {% endif %}
+                        {% for i in c[3] %}
+                            <span><i>{{i}}</i></span><br>
+                        {% endfor %}
+                    </div>
+                    <div id="comments" style="margin-left: 50px; width:fit-content; ">
+                        {% for comment in c[4] %}
+                        <div id="article_{{c[5]}}_comment_{{comment['id']}}" class="comment">
+                            <span><a href="/ui/users/{{comment['uname']}}">{{comment['uname']}}</a>  {{comment['time']}}</span><br>
+                            {% for i in comment['content'].split('\r\n') %}
+                                <span>{{i}}</span><br>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <hr class="hr_spacing">
+        <div id="base_comments" style="margin-left: 30px;">
+            {% for co in base_comments %}
+            <div id="b_comment_{{co['id']}}" class="comment">
+                <span><a href="/ui/users/{{co['uname']}}">{{co['uname']}}</a>  {{co['time']}}</span><br>
+                {% for i in co['content'].split('\r\n') %}
+                    <span>{{i}}</span><br>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+        <hr class="hr_spacing">
+        <div id="page_selector">
+            <p>第{{page}}页 共{{pages}}页</p>
+            {% if use_previous %}
+            <a href="/ui/thread/{{num}}?page=1">第一页</a> - 
+            <a href="/ui/thread/{{num}}?page={{page-1}}">上一页</a> 
+            {% endif %}
+
+            {% if use_next %}
+            <a href="/ui/thread/{{num}}?page={{page+1}}">下一页</a> - 
+            <a href="/ui/thread/{{num}}?page=1page={{pages}}">最后一页</a>
+            {% endif %}
+        </div>
+        <hr class="hr_spacing">
+        <div id="send-comment" style="width:400px;height: 300px;margin-left: 50%;transform: translate(-50%,0);text-align: center;">
+            <span style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;">要吐槽一下吗？</span>
+            <form name="comment" action="/blog/comment_thread" method="post">
+                <input type="hidden" name="target" value="{{id}}">
+                <textarea oninput="l(this,500,'textNum');" id="textArea" cols="50" required="required" rows="10" name="content" style="font-family: Arial, Helvetica, sans-serif;resize: none;"></textarea>
+                <p style="font-family: Arial, Helvetica, sans-serif;"><span id="textNum" style="text-align: right; ">0</span>/500</p>
+                <input type="submit" name="submit" value="我输好了">
+            </form>
+        </div>
+</body>
+<script>
+    function copy(){
+        var range=document.createRange()
+        range.selectNode(document.getElementById('threadId'))
+        window.getSelection().addRange(range)
+        document.execCommand('copy')
+    }
+</script>
+</html>
